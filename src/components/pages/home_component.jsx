@@ -2,9 +2,8 @@ import SearchForm from "../search";
 import ItemProduct from "./item_product";
 import { useState } from "react";
 function Home() {
-  let [count, setCount] = useState(0);
-
-  const products = [
+  console.log("Home");
+  const dataProducts = [
     {
       name: "Iphone 11",
       color: "red",
@@ -35,8 +34,25 @@ function Home() {
     },
   ];
 
+  let [products, setProducts] = useState(dataProducts);
+
+  function handleDelete(index) {
+    let isDelete = confirm("Are you sure??????");
+    if (isDelete) {
+      products.splice(index, 1);
+      setProducts([...products]);
+    }
+  }
+
   let datas = products.map((item, index) => {
-    return <ItemProduct key={index} {...item} />;
+    return (
+      <ItemProduct
+        index={index}
+        handleDelete={handleDelete}
+        key={index}
+        {...item}
+      />
+    );
   });
 
   return (

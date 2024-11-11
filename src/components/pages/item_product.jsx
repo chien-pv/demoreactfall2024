@@ -1,9 +1,9 @@
-function ItemProduct({ name, color, category, price }) {
+function ItemProduct({ index, name, color, category, price, handleDelete }) {
   let style = {
     backgroundColor: color,
   };
   function handleClick() {
-    alert("Delete");
+    handleDelete(index);
   }
 
   return (

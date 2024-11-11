@@ -3,3 +3,7 @@
   height: 30px;
   border-radius: 30px;
 }
+
+main {
+  min-height: 80vh;
+}
