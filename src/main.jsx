@@ -1,11 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
 import App from "./App.jsx";
 import Root from "./Root.jsx";
 import Content from "./components/content.jsx";
+import Todos from "./components/todos.jsx";
+import ProductDetail from "./components/pages/product_detail.jsx";
+import Login from "./components/pages/login.jsx";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +23,14 @@ const router = createBrowserRouter([
       {
         path: "products",
         element: <Content />,
+      },
+      {
+        path: "products/:id",
+        element: <ProductDetail />,
+      },
+      {
+        path: "todos",
+        element: <Todos />,
       },
     ],
   },
@@ -38,12 +50,17 @@ const router = createBrowserRouter([
         path: "contact",
         element: <h2>Product Management</h2>,
       },
+      {
+        path: "login",
+        element: <Login />,
+      },
     ],
   },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <ToastContainer />
     <RouterProvider router={router} />
   </StrictMode>
 );

@@ -7,3 +7,16 @@
 main {
   min-height: 80vh;
 }
+.todos {
+  width: 40%;
+  margin: 0 auto;
+}
+.todos form {
+  padding: 10px;
+  border: 1px solid rgb(236, 224, 224);
+}
+
+h1 {
+  font-size: 24px;
+  padding: 10px;
+}
