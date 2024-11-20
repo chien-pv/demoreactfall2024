@@ -1,11 +1,10 @@
 import { useState } from "react";
-import TodoContext from "../../contexts/todoContext";
-import { useContext } from "react";
+import { useDispatch } from "react-redux";
+import { addTodo } from "../../redux/todoSlice";
 
 function FormAdd() {
-  const { handleAdd } = useContext(TodoContext);
-
   let [text, setText] = useState("");
+  let dispatch = useDispatch();
   return (
     <form className="max-w-sm mx-auto">
       <div className="mb-5">
@@ -22,7 +21,7 @@ function FormAdd() {
 
       <button
         onClick={() => {
-          handleAdd(text);
+          dispatch(addTodo(text));
         }}
         type="button"
         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

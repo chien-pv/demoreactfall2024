@@ -10,6 +10,10 @@ import Todos from "./components/todos.jsx";
 import ProductDetail from "./components/pages/product_detail.jsx";
 import Login from "./components/pages/login.jsx";
 import { ToastContainer } from "react-toastify";
+import { Provider } from "react-redux";
+
+// import store from "./demoRedux.js";
+import store from "./redux/store.js";
 
 const router = createBrowserRouter([
   {
@@ -60,7 +64,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ToastContainer />
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <ToastContainer />
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );
