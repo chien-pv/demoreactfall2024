@@ -3,13 +3,27 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const todoApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://674015ded0b59228b7ee99eb.mockapi.io",
+    baseUrl: "http://localhost:3000",
+    prepareHeaders: (headers) => {
+      let token = localStorage.getItem("token");
+      if (token) {
+        headers.set("authentication", token);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
-    getTodos: builder.query({
-      query: () => "/todos", // Endpoint để lấy danh sách bài viết
+    getUser: builder.query({
+      query: () => "/users", // Endpoint để lấy danh sách bài viết
+    }),
+    login: builder.mutation({
+      query: (body) => ({
+        url: `/login`,
+        method: "POST",
+        body,
+      }),
     }),
   }),
 });
 
-export const { useGetTodosQuery } = todoApi;
+export const { useLoginMutation, useGetUserQuery } = todoApi;

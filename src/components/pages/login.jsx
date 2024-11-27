@@ -1,13 +1,32 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { useLoginMutation } from "../../redux/createAPITodo";
 
 function Login() {
   const notify = () => toast("Wow so easy !");
   const navigate = useNavigate();
+  const [login] = useLoginMutation();
+
   async function handleLogin() {
     notify();
     navigate("/");
   }
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  async function handlelogin(data) {
+    console.log(data);
+    let dt = await login(data);
+    console.log(dt.data.accsesToken);
+    localStorage.setItem("token", dt.data.accsesToken);
+  }
+  console.log(watch("password"));
   return (
     <>
       <section className="bg-gray-50 dark:bg-gray-900">
@@ -28,7 +47,10 @@ function Login() {
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Sign in to your account
               </h1>
-              <form className="space-y-4 md:space-y-6" action="#">
+              <form
+                onSubmit={handleSubmit(handlelogin)}
+                className="space-y-4 md:space-y-6"
+              >
                 <div>
                   <label
                     htmlFor="email"
@@ -37,6 +59,7 @@ function Login() {
                     Your email
                   </label>
                   <input
+                    {...register("email")}
                     type="email"
                     name="email"
                     id="email"
@@ -53,6 +76,7 @@ function Login() {
                     Password
                   </label>
                   <input
+                    {...register("password")}
                     type="password"
                     name="password"
                     id="password"
@@ -60,6 +84,8 @@ function Login() {
                     className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required=""
                   />
+                  {console.log(errors)}
+                  {errors.password && <span>{errors.password.message}</span>}
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-start">
@@ -89,9 +115,8 @@ function Login() {
                   </a>
                 </div>
                 <button
-                  onClick={handleLogin}
+                  type="submit"
                   style={{ background: "red" }}
-                  type="button"
                   className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
                   Sign in
